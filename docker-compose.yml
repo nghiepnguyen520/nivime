@@ -20,15 +20,30 @@ services:
 
   mongo:
     container_name: mongo
-    image: mongo
+    image: bitnami/mongodb:latest
     env_file:
       - .env
+    environment:
+      MONGODB_ROOT_PASSWORD: ${MONGODB_ROOT_PASSWORD}
+      MONGODB_USERNAME: ${MONGODB_USERNAME}
+      MONGODB_PASSWORD: ${MONGODB_PASSWORD}
+      MONGODB_DATABASE: ${MONGODB_DATABASE}
     ports:
-      - 27017:27017
+      - 27018:27017
     volumes:
       - ./data:/data/db
     networks:
       - common
 
+  adminmongo:
+    image: mrvautin/adminmongo
+    ports:
+      - 1234:1234
+    environment:
+      - HOST=0.0.0.0
+
 networks:
   common:
+volumes:
+  mongo:
+    name: nivime-mongo
