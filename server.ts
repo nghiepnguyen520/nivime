@@ -1,21 +1,36 @@
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
+import bodyParser from "body-parser";
 import * as dotenv from "dotenv";
 import { MAIN_CONFIG } from "./config/main.config";
 import { connectDb } from "./config/db.config";
+import apiRoute from "./src/routers";
+
 dotenv.config();
 
 const app = express();
 
+app.use(cors());
+app.use(morgan("combined"));
+app.use(bodyParser.json());
+
 // Connect db
 connectDb(MAIN_CONFIG.mongoURL);
 
-app.use(cors());
-app.use(morgan("combined"));
+// map router
+app.use("/api", apiRoute);
 
 app.get("/", (req, res) => {
-  res.send("Why you go there?!");
+  res.json({
+    message: "Home page",
+  });
+});
+
+app.get("*", (req, res) => {
+  res.json({
+    message: "Home page",
+  });
 });
 
 app.listen(MAIN_CONFIG.port, () =>

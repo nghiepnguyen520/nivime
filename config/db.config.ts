@@ -6,8 +6,8 @@ export const connectDb = async (mongoURL: string) => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    console.log("Connecting db:", mongoURL);
+    console.log("Connecting db:____", mongoURL);
   } catch (error) {
-    console.log("Connect dv err", error);
+    console.log("Connect db err:____", error);
   }
 };
