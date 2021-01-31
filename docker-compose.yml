@@ -31,16 +31,9 @@ services:
     ports:
       - 27018:27017
     volumes:
-      - ./data:/data/db
+      - /var/lib/mongodb:/data/db
     networks:
       - common
-
-  adminmongo:
-    image: mrvautin/adminmongo
-    ports:
-      - 1234:1234
-    environment:
-      - HOST=0.0.0.0
 
 networks:
   common:
