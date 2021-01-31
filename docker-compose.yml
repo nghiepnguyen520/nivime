@@ -31,7 +31,7 @@ services:
     ports:
       - 27018:27017
     volumes:
-      - /var/lib/mongodb:/data/db
+      - /usr/local/var/mongodb:/data/db
     networks:
       - common
 
