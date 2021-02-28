@@ -1,0 +1,42 @@
+version: "3.7"
+
+services:
+  node:
+    container_name: node_server
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/app
+    command: yarn dev
+    networks:
+      - common
+    env_file:
+      - .env
+    links:
+      - mongo
+
+  mongo:
+    container_name: mongo
+    image: bitnami/mongodb:latest
+    env_file:
+      - .env
+    environment:
+      MONGODB_ROOT_PASSWORD: ${MONGODB_ROOT_PASSWORD}
+      MONGODB_USERNAME: ${MONGODB_USERNAME}
+      MONGODB_PASSWORD: ${MONGODB_PASSWORD}
+      MONGODB_DATABASE: ${MONGODB_DATABASE}
+    ports:
+      - 27018:27017
+    volumes:
+      - /usr/local/var/mongodb:/data/db
+    networks:
+      - common
+
+networks:
+  common:
+volumes:
+  mongo:
+    name: nivime-mongo
