@@ -13,9 +13,10 @@ trainController.post(
       return res.status(400).json({ errors: errors.array() });
     }
     const { question, answer } = req.body;
-    const response = await trainService(question, answer);
+    const { message, status } = await trainService(question, answer);
     res.json({
-      message: "api train",
+      message,
+      status,
     });
   }
 );
